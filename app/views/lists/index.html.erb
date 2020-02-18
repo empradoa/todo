@@ -1,0 +1,60 @@
+<table class="table table-bordered">
+  <br>
+  <!-- <thead>
+    <tr>
+      <th>Descripcion</th>
+      <th>Completado</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead> -->
+
+  <tbody>
+    <% @lists.each do |list| %>
+      <%if list.completed %>
+      <tr class="table-secondary">
+        <td class="striker"><%= link_to list.description, edit_list_path(list) %><% list.description %></td>
+        <td>
+          <%= form_for(list) do |f| %>
+            <%= f.text_field :description,  type: 'hidden'  %>
+            <%= f.check_box :completed, :checked => false, :style => 'visibility: hidden' %>    
+            <%= f.submit 'Desmarcar', class: 'btn btn-outline-secondary btn-sm' %>
+          <% end %>
+        </td>
+        <!-- <td><%= list.completed %></td> -->
+        <td>
+          <% link_to 'Mostrar', list %>
+          <% link_to 'Editar', edit_list_path(list) %>
+          <center><%= link_to 'Eliminar', list, class: 'btn btn-outline-danger btn-sm', method: :delete, data: { confirm: 'Esta seguro de eliminar este registro' } %></center>
+        </td>
+      </tr>
+      <%else%>
+      <tr>
+        <td><%= link_to list.description, edit_list_path(list) %><% list.description %></td>
+        <td>
+            <%= form_for(list) do |f| %>
+            <%= f.text_field :description,  type: 'hidden'  %>
+            <%= f.check_box :completed, :checked => true, :style => 'visibility: hidden' %>    
+            <%= f.submit 'Marcar', class: 'btn btn-outline-secondary btn-sm' %>      
+          <% end %>
+        </td>
+        <!-- <td><%= list.completed %></td> -->
+        <td>
+          <% link_to 'Mostrar', list %>
+          <% link_to 'Editar', edit_list_path(list) %>
+          <center><%= link_to 'Eliminar', list, class: 'btn btn-outline-danger btn-sm', method: :delete, data: { confirm: 'Esta seguro de eliminar este registro' } %></center>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% link_to 'Nueva Lista', new_list_path, class:'btn btn-success' %>
+
+<br/>
+
+<%= link_to 'Eliminar Elementos Marcados', home_basura_em_path, data: {confirm: 'Esta seguro de eliminar todo' } %> |
+
+<%= link_to 'Eliminar Todos los Elementos', home_eliminarTodo_em_path, data: {confirm: 'Esta seguro de eliminar todo' } %>
